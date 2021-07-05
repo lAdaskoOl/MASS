@@ -12,12 +12,12 @@ while True:
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     faces = faceCascade.detectMultiScale(gray, scaleFactor=1.2, minNeighbors=5, minSize=(20, 20))
 
-    if not len(faces) == 0:
-        date = datetime.datetime.now()
-        data = [date]
-        #print(type(img))
-        #n = Network()
-        #n.send(img)
+    #TODO: The following if statement will save the detected faces
+    #if not len(faces) == 0:
+        #date = datetime.datetime.now()
+        #file = "images/" + str(date).replace(' ', '_').replace(':', '_')[0: 19] + ".jpg"
+        #print(file)
+        #cv2.imwrite(file, img)
 
     for (x, y, w, h) in faces:
         cv2.rectangle(img, (x, y), (x+w, y+h), (255, 0, 0), 2)
