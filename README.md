@@ -1,4 +1,4 @@
-# MASS (Mister Alaba's Security System)
+# MASS (Mister Adasko's Security System)
 
 The program shall be capable of detecting faces using camera vision.
 Furthermore, the socket server will be hosted on a Raspbery Pi board
