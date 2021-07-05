@@ -1,6 +1,5 @@
 import face_recognition as fr
 import os
-import cv2
 import face_recognition
 import numpy as np
 
@@ -13,10 +12,10 @@ def get_encoded_faces():
     """
     encoded = {}
 
-    for dirpath, dnames, fnames in os.walk("./faces"):
+    for dirpath, dnames, fnames in os.walk("./images"):
         for f in fnames:
             if f.endswith(".jpg") or f.endswith(".png"):
-                face = fr.load_image_file("faces/" + f)
+                face = fr.load_image_file("images/" + f)
                 encoding = fr.face_encodings(face)[0]
                 encoded[f.split(".")[0]] = encoding
 
@@ -26,27 +25,23 @@ def unknown_image_encoded(img):
     """
     encode a face given the file name
     """
-    face = fr.load_image_file("faces/" + img)
+    face = fr.load_image_file("images/" + img)
     encoding = fr.face_encodings(face)[0]
 
     return encoding
 
 
-def classify_face(im):
+def classify_face(img):
     """
     will find all of the faces in a given image and label
     them if it knows what they are
 
-    :param im: str of file path
+    :param img: numpy array
     :return: list of face names
     """
     faces = get_encoded_faces()
     faces_encoded = list(faces.values())
     known_face_names = list(faces.keys())
-
-    img = cv2.imread(im, 1)
-    #img = cv2.resize(img, (0, 0), fx=0.5, fy=0.5)
-    #img = img[:,:,::-1]
  
     face_locations = face_recognition.face_locations(img)
     unknown_face_encodings = face_recognition.face_encodings(img, face_locations)
@@ -65,14 +60,14 @@ def classify_face(im):
 
         face_names.append(name)
 
-        for (top, right, bottom, left), name in zip(face_locations, face_names):
+        #for (top, right, bottom, left), name in zip(face_locations, face_names):
             # Draw a box around the face
-            cv2.rectangle(img, (left-20, top-20), (right+20, bottom+20), (255, 0, 0), 2)
+            #cv2.rectangle(img, (left-20, top-20), (right+20, bottom+20), (255, 0, 0), 2)
 
             # Draw a label with a name below the face
-            cv2.rectangle(img, (left-20, bottom -15), (right+20, bottom+20), (255, 0, 0), cv2.FILLED)
-            font = cv2.FONT_HERSHEY_DUPLEX
-            cv2.putText(img, name, (left -20, bottom + 15), font, 1.0, (255, 255, 255), 2)
+            #cv2.rectangle(img, (left-20, bottom -15), (right+20, bottom+20), (255, 0, 0), cv2.FILLED)
+            #font = cv2.FONT_HERSHEY_DUPLEX
+            #cv2.putText(img, name, (left -20, bottom + 15), font, 1.0, (255, 255, 255), 2)
 
 
     # Display the resulting image
@@ -80,8 +75,3 @@ def classify_face(im):
      #   cv2.imshow('Video', img)
       #  if cv2.waitKey(1) & 0xFF == ord('q'):
     return face_names
-
-
-#print(classify_face("image.png"))
-
-
