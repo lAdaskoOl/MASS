@@ -4,6 +4,7 @@ pg.init()
 width = 600
 height = 400
 screen = pg.display.set_mode((width, height))
+pg.display.set_caption("MASS (Mr. Adasko's Security System)")
 
 class UserInterface:
 
