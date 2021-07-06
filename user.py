@@ -1,4 +1,5 @@
 import pygame as pg
+from network import Network
 
 pg.init()
 width = 600
@@ -53,10 +54,12 @@ class UserInterface:
     def run(self):
 
         running = True
+        n = Network()
         while running:
 
             if self.counter % 2 == 0:
                 self.connected()
+                print(n.send("connected from user"))
             else:
                 self.not_connected()
 
