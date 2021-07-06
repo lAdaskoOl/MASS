@@ -15,9 +15,11 @@ except socket.error as e:
 s.listen(2)
 print("Waiting for a connection, Server Started")
 
-def threaded_client(conn, device):
+info = {"number":0}
+
+def threaded_client(conn):
     conn.send(pickle.dumps('hi'))
-    reply = ""
+    info["number"] += 1
     while True:
         try:
             data = conn.recv(2048)
@@ -29,16 +31,17 @@ def threaded_client(conn, device):
             else:
                 reply = 'Data received'
                 print("-------------------------")
-                print("Device number: ", device)
+                print("Number of devices: ", info["number"])
                 print("Received: ", data)
                 print("Sending : ", reply)
 
-                conn.sendall(pickle.dumps(reply))
+                conn.sendall(pickle.dumps(info))
         except:
             break
 
     print("Lost connection")
     conn.close()
+    info["number"] -= 1
 
 connected_devices = 0
 while True:
@@ -46,4 +49,4 @@ while True:
     print("Connected to:", addr)
 
     connected_devices += 1
-    start_new_thread(threaded_client, (conn, connected_devices))
+    start_new_thread(threaded_client, (conn,))
