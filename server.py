@@ -17,6 +17,16 @@ print("Waiting for a connection, Server Started")
 
 info = {"number":0}
 
+def read_log():
+    file = open("Log.dat", 'r')
+    lines = file.readlines()
+    return lines
+
+def write_log(text):
+    file = open("Log.dat", "w")
+    file.write(text)
+    file.close()
+
 def threaded_client(conn):
     conn.send(pickle.dumps('hi'))
     info["number"] += 1
@@ -30,8 +40,14 @@ def threaded_client(conn):
                 break
             else:
                 reply = 'Data received'
+
+                if "write" in data:
+                    write_log(data.replace("write ", ''))
+                if 'read' in data:
+                    reply = read_log()
+
                 print("-------------------------")
-                print("Number of devices: ", info["number"])
+                #print("Number of devices: ", info["number"])
                 print("Received: ", data)
                 print("Sending : ", reply)
 
