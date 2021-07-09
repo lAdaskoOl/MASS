@@ -18,7 +18,7 @@ class Network:
             pass
 
     def send(self, data):
-        print(self.pos)
+        #print(self.pos)
         try:
             self.client.send(pickle.dumps(data))
             return pickle.loads(self.client.recv(2048))

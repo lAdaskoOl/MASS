@@ -1,6 +1,6 @@
 from tkinter import *
 import time
-import sys
+from network import Network
 
 class User():
     def __init__(self):
@@ -21,6 +21,7 @@ class User():
         self.button1 = Button(text="Connect", command=self.on_press)
         self.button1.place(x=0, y=90, width=100, height=50)
 
+        self.n = Network()
         self.counter = 0
         self.x = True
 
@@ -28,14 +29,18 @@ class User():
         self.x = False
 
     def on_press(self):
-        text = self.login.get("1.0", END).replace('\n', '')
-        print(text)
+        login = self.login.get("1.0", END).replace('\n', '')
+        password = self.password.get("1.0", END).replace('\n', '')
+        if password == "Admin" and login == "Admin":
+            self.counter += 1
 
     def run(self):
         while self.x:
             self.app.update_idletasks()
             self.app.update()
-
+            if not(self.counter % 2 == 0):
+                data = self.n.send("data")
+                #print(data)
             time.sleep(0.1)
 
 if __name__ == "__main__":
