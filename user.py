@@ -1,82 +1,43 @@
-import pygame as pg
-from network import Network
+from tkinter import *
+import time
+import sys
 
-pg.init()
-width = 600
-height = 400
-screen = pg.display.set_mode((width, height))
-pg.display.set_caption("MASS (Mr. Adasko's Security System)")
+class User():
+    def __init__(self):
+        self.master = Tk()
+        self.master.geometry("300x400")
+        self.master.protocol("WM_DELETE_WINDOW", self.close)
+        self.app = Canvas(self.master)
 
-class UserInterface:
+        label = Label(bg="orange")
+        label.place(x=0, y=0, width=300, height=400)
 
-    def __init__(self, screen, width, height):
-        self.delay = 10
-        self.screen = screen
-        self.width = width
-        self.height = height
-        self.button = (self.width/2 - 100, self.height-100, 200, 80)
-        self.counter = 1
+        self.login = Text()
+        self.login.place(x=0, y=0, width=100, height=25)
 
-    def not_connected(self):
-        self.screen.fill((255, 255, 255))
+        self.password = Text()
+        self.password.place(x=0, y=45, width=100, height=25)
 
-        pg.draw.rect(self.screen, (0, 255, 0), self.button, 0)
+        self.button1 = Button(text="Connect", command=self.on_press)
+        self.button1.place(x=0, y=90, width=100, height=50)
 
-        pg.font.init()  # you have to call this at the start, if you want to use this module.
-        myfont = pg.font.SysFont('Times New Roman', 30)
+        self.counter = 0
+        self.x = True
 
-        textsurface = myfont.render('Connect', False, (0, 0, 0))
-        screen.blit(textsurface, (self.width / 2 - 50, self.height - 85))
+    def close(self):
+        self.x = False
 
-        x, y = pg.mouse.get_pos()
-        if x >= self.width / 2 - 100 and x <= self.width / 2 + 100 and y >= self.height - 100 and y <= self.height + 80:
-            pg.draw.rect(self.screen, (255, 255, 0), self.button, 0)
-            textsurface = myfont.render('Connect', False, (255, 0, 0))
-            screen.blit(textsurface, (self.width / 2 - 50, self.height - 85))
-
-    def connected(self):
-        self.screen.fill((255, 255, 255))
-
-        pg.draw.rect(self.screen, (0, 255, 0), self.button, 0)
-
-        pg.font.init()  # you have to call this at the start, if you want to use this module.
-        myfont = pg.font.SysFont('Times New Roman', 30)
-
-        textsurface = myfont.render('Disconnect', False, (0, 0, 0))
-        screen.blit(textsurface, (self.width / 2 - 65, self.height - 85))
-
-        x, y = pg.mouse.get_pos()
-        if x >= self.width / 2 - 100 and x <= self.width / 2 + 100 and y >= self.height - 100 and y <= self.height + 80:
-            pg.draw.rect(self.screen, (255, 255, 0), self.button, 0)
-            textsurface = myfont.render('Disconnect', False, (255, 0, 0))
-            screen.blit(textsurface, (self.width / 2 - 65, self.height - 85))
+    def on_press(self):
+        text = self.login.get("1.0", END).replace('\n', '')
+        print(text)
 
     def run(self):
+        while self.x:
+            self.app.update_idletasks()
+            self.app.update()
 
-        running = True
-        n = Network()
-        while running:
+            time.sleep(0.1)
 
-            if self.counter % 2 == 0:
-                self.connected()
-                print(n.send("connected from user"))
-            else:
-                self.not_connected()
-
-            x, y = pg.mouse.get_pos()
-            for event in pg.event.get():
-                if event.type == pg.QUIT:
-                    running = False
-                if x >= self.width/2-100 and x <= self.width/2+100 and y >= self.height-100 and y <= self.height+80:
-                    if pg.mouse.get_pressed()[0]:
-                        print("YOYOYO") #TODO: connect the interface to the socket server
-                        self.counter += 1
-
-            pg.display.flip()
-            pg.event.pump()
-            pg.time.delay(self.delay)
-
-        pg.quit()
-
-user = UserInterface(screen=screen, width=width, height=height)
-user.run()
+if __name__ == "__main__":
+    user = User()
+    user.run()
