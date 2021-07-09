@@ -25,13 +25,11 @@ class Network:
         except socket.error as e:
             print(e)
 
+'''
+    The following is ment for testing the network connection
+'''
 if __name__ == "__main__":
-    #a = np.array([[3, 3, 3], [2, 1, 3], [1, 2, 5]])
-    #date = datetime.datetime.now()
-
-    #d = [date, a]
     n = Network()
     while(True):
-        information = n. send('Hello')
-        print(information)
+        information = n. send('write Face detected 120983209')
         sleep(1)

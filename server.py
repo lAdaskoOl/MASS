@@ -23,8 +23,8 @@ def read_log():
     return lines
 
 def write_log(text):
-    file = open("Log.dat", "w")
-    file.write(text)
+    file = open("Log.dat", "a")
+    file.write(text+"\n")
     file.close()
 
 def threaded_client(conn):

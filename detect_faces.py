@@ -6,7 +6,7 @@ from face_rec import classify_face
 faceCascade = cv2.CascadeClassifier('haarcascade_frontalface_alt.xml')
 cap = cv2.VideoCapture(0)
 
-#n = Network()
+n = Network()
 
 while True:
     ret, img = cap.read()
@@ -20,6 +20,8 @@ while True:
             file = "images/" + str(date).replace(' ', '_').replace(':', '_')[0: 19] + ".jpg"
             cv2.imwrite(file, img)
             #TODO: notify the user about the detected faces
+            data = "write Face detected on " + str(date).replace(' ', '_').replace(':', '_')[0: 19]
+            n.send(data)
 
     for (x, y, w, h) in faces:
         cv2.rectangle(img, (x, y), (x+w, y+h), (255, 0, 0), 2)
