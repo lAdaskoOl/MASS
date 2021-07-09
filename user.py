@@ -6,6 +6,7 @@ class User():
     def __init__(self):
         self.master = Tk()
         self.master.geometry("300x400")
+        self.master.resizable(False, False)
         self.master.protocol("WM_DELETE_WINDOW", self.close)
         self.app = Canvas(self.master)
 
@@ -18,8 +19,11 @@ class User():
         self.password = Text()
         self.password.place(x=0, y=45, width=100, height=25)
 
-        self.button1 = Button(text="Connect", command=self.on_press)
+        self.button1 = Button(text='Connect', command=self.connect)
         self.button1.place(x=0, y=90, width=100, height=50)
+
+        #self.button2 = Button(text="Disconnect", command=self.disconnect)
+        #self.button2.place(x=115, y=90, width=100, height=50)
 
         self.n = Network()
         self.counter = 0
@@ -28,17 +32,23 @@ class User():
     def close(self):
         self.x = False
 
-    def on_press(self):
+    def connect(self):
         login = self.login.get("1.0", END).replace('\n', '')
         password = self.password.get("1.0", END).replace('\n', '')
         if password == "Admin" and login == "Admin":
             self.counter += 1
 
+    def disconnect(self):
+        self.counter = 0
+
     def run(self):
         while self.x:
             self.app.update_idletasks()
             self.app.update()
-            if not(self.counter % 2 == 0):
+            if self.counter % 2 == 0:
+                self.button1['text'] = 'Connect'
+            else:
+                self.button1['text'] = 'Disconnect'
                 data = self.n.send("data")
                 #print(data)
             time.sleep(0.1)
