@@ -1,3 +1,4 @@
+import sys
 from tkinter import *
 import time
 from network import Network
@@ -29,7 +30,7 @@ class User():
         self.button1 = Button(text='Connect', command=self.connect)
         self.button1.place(x=10, y=120, width=100, height=50)
 
-        self.button2 = Button(text='Get image')
+        self.button2 = Button(text='Get image', command=self.image_get)
         self.button2.place(x=120, y=120, width=100, height=50)
 
         self.info = Label(text="Not connected", bg="grey", fg="red")
@@ -38,9 +39,13 @@ class User():
         self.n = Network()
         self.counter = 0
         self.x = True
+        self.image = False
 
     def close(self):
         self.x = False
+
+    def image_get(self):
+        self.image = True
 
     def connect(self):
         login = self.login.get("1.0", END).replace('\n', '')
@@ -63,6 +68,10 @@ class User():
                 data = self.n.send("data")
                 self.info['text'] = data
                 #print(data)
+                if self.image:
+                    self.n.get_image()
+                    #self.image = False
+                    sys.exit(0)
             time.sleep(0.1)
 
 if __name__ == "__main__":

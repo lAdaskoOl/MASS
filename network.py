@@ -25,6 +25,20 @@ class Network:
         except socket.error as e:
             print(e)
 
+    def get_image(self):
+        try:
+            self.client.send(pickle.dumps('send'))
+        except socket.error as e:
+            print(e)
+
+        f = open('torecv.png', 'wb')
+        l = self.client.recv(1024)
+        while(l):
+            print("Receiving...")
+            f.write(l)
+            l = self.client.recv(1024)
+        f.close()
+
 '''
     The following is ment for testing the network connection
 '''

@@ -46,12 +46,22 @@ def threaded_client(conn):
                 if 'read' in data:
                     reply = read_log()
 
+                if data == 'send':
+                    f = open('Random image', 'rb')
+                    l = f.read(1024)
+                    while (l):
+                        print('Sending...')
+                        conn.send(l)
+                        l = f.read(1024)
+                    f.close()
+
                 print("-------------------------")
                 #print("Number of devices: ", info["number"])
                 print("Received: ", data)
                 print("Sending : ", reply)
 
-                conn.sendall(pickle.dumps(info))
+                #conn.sendall(pickle.dumps(info))
+                conn.sendall(pickle.dumps(reply))
         except:
             break
 

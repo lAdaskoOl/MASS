@@ -1,3 +1,20 @@
+from network import Network
+import numpy as np
+import pickle
+import cv2
+
+n = Network()
+
+img = cv2.imread('sample.jpg')
+
+img = pickle.dumps(img)
+
+img1 = pickle.dumps(img)
+#img_hex = img.hex()
+
+print(img)
+
+'''
 from tkinter import *
 import time
 import sys
@@ -41,3 +58,4 @@ class User():
 if __name__ == "__main__":
     user = User()
     user.run()
+'''
