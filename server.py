@@ -21,7 +21,7 @@ info = {"number":0}
 def read_log():
     file = open("Log.dat", 'r')
     lines = file.readlines()
-    return lines
+    return lines[len(lines)-1]  #return last element from the Log.dat
 
 def write_log(text):
     file = open("Log.dat", "a")

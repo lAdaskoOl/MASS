@@ -65,7 +65,7 @@ class User():
                 self.info['text'] = "Not connected"
             else:
                 self.button1['text'] = 'Disconnect'
-                data = self.n.send("data")
+                data = self.n.send("read")
                 self.info['text'] = data
                 #print(data)
                 if self.image:
