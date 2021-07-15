@@ -70,8 +70,10 @@ class User():
                 #print(data)
                 if self.image:
                     self.n.get_image()
-                    #self.image = False
-                    sys.exit(0)
+                    self.image = False
+                    # Connection will be closed after the image s sent,
+                    # therefore connection has to be established again
+                    self.n = Network()
             time.sleep(0.1)
 
 if __name__ == "__main__":

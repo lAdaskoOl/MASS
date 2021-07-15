@@ -47,13 +47,14 @@ def threaded_client(conn):
                     reply = read_log()
 
                 if data == 'send':
-                    f = open('Random image', 'rb')
+                    f = open('Image to send', 'rb')
                     l = f.read(1024)
                     while (l):
                         print('Sending...')
                         conn.send(l)
                         l = f.read(1024)
                     f.close()
+                    conn.close()
 
                 print("-------------------------")
                 #print("Number of devices: ", info["number"])
