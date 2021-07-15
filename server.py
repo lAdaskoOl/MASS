@@ -1,6 +1,7 @@
 import socket
 from _thread import *
 import pickle
+import os
 
 server = "Your IP address"
 port = 5555
@@ -47,7 +48,12 @@ def threaded_client(conn):
                     reply = read_log()
 
                 if data == 'send':
-                    f = open('Image to send', 'rb')
+                    #get image from the folder
+                    dir = 'images/'
+                    files = os.listdir(dir)
+
+                    #read image and send it
+                    f = open(dir+files[0], 'rb')
                     l = f.read(1024)
                     while (l):
                         print('Sending...')
