@@ -1,7 +1,32 @@
 import datetime
 from network import Network
 import cv2
+import os
 from face_rec import classify_face
+from email.message import EmailMessage
+import imghdr
+import smtplib
+
+def sendEmail():
+    # Create the container email message.
+    msg = EmailMessage()
+    msg['Subject'] = 'Our family reunion'
+    # me == the sender's email address
+    # family = the list of all recipients' email addresses
+    msg['From'] = 'alabaada@gmail.com'
+    msg['To'] = 'alabaadam@gmail.com'
+    msg.preamble = 'You will not see this in a MIME-aware mail reader.\n'
+
+    files = os.listdir('images/')
+    with open(files[0], 'rb') as fp:
+        img_data = fp.read()
+
+    msg.add_attachment(img_data, maintype='image',
+                       subtype=imghdr.what(None, img_data))
+
+    with smtplib.SMTP('localhost') as s:
+        s.send_message(msg)
+    print("Email sent...")
 
 faceCascade = cv2.CascadeClassifier('haarcascade_frontalface_alt.xml')
 cap = cv2.VideoCapture(0)
@@ -21,7 +46,9 @@ while True:
             cv2.imwrite(file, img)
             #TODO: notify the user about the detected faces
             data = "write Face detected on " + str(date).replace(' ', '_').replace(':', '_')[0: 19]
-            n.send(data)
+            info = n.send(data)
+            if info["number"] == 1: # if user is not connected to the server
+                sendEmail()
 
     for (x, y, w, h) in faces:
         cv2.rectangle(img, (x, y), (x+w, y+h), (255, 0, 0), 2)
