@@ -8,7 +8,7 @@ This way it is possible to connect to the monitoring system remotely.
 
 ### [ **1. Introduction** ](#1-introduction)
 ### [**2. Set-up**](#2-set-up)
-### [**3. Usage**](#2-usage)
+### [**3. Usage**](#3-usage)
 
 ---
 
