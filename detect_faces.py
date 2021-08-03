@@ -13,8 +13,8 @@ def sendEmail():
     msg['Subject'] = 'Our family reunion'
     # me == the sender's email address
     # family = the list of all recipients' email addresses
-    msg['From'] = 'alabaada@gmail.com'
-    msg['To'] = 'alabaadam@gmail.com'
+    msg['From'] = 'some email'
+    msg['To'] = 'your email'
     msg.preamble = 'You will not see this in a MIME-aware mail reader.\n'
 
     files = os.listdir('images/')
