@@ -29,3 +29,6 @@ You can add pictures of your family members, friends, girlfriend, boyfriend, etc
 After these steps the program is operational.
 
 # 3. Usage
+First the server.py file has to be run on the external circuit board/computer, then the 
+detec_faces.py also has to be run. The user.py can be run on the user computer to connect
+to the local socket server.
