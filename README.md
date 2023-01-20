@@ -1,4 +1,4 @@
-# MASS (Mr. Adasko's Security System)
+# MASS 
 
 The program is capable of detecting faces using camera vision.
 Furthermore, the socket server can be hosted on an external circuit board such as Raspbery Pi. 
